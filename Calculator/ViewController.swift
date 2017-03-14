@@ -25,6 +25,27 @@ class ViewController: UIViewController {
             digitInMiddle = true
         }
     }
-//    func drawHorizonLine(from startX:Double, to endX:Double, using color:UIColor)
+    //    func drawHorizonLine(from startX:Double, to endX:Double, using color:UIColor)
+    var displayValue: Double {
+        get{
+            return Double(display!.text!)!
+        }
+        set{
+            display!.text = String(newValue)
+        }
+    }
+    @IBAction func performOperation(_ sender: UIButton) {
+        digitInMiddle = false
+        if let matheMaticalSymbol = sender.currentTitle{
+            switch matheMaticalSymbol {
+            case "π":
+                displayValue = Double.pi
+            case "√":
+                displayValue = sqrt(displayValue)
+            default:
+                break
+            }
+        }
+    }
 }
 
