@@ -12,17 +12,17 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var display: UILabel!
     
-    var digitInMiddle = false
+    var userIsInTheMiddleOfTyping = false
     
     @IBAction func touchDigit(_ sender: UIButton) {
         let digit = sender.currentTitle!
-        if digitInMiddle {
+        if userIsInTheMiddleOfTyping {
             let textCurrent = display!.text!
             display!.text = textCurrent + digit
         }
         else{
             display!.text = digit
-            digitInMiddle = true
+            userIsInTheMiddleOfTyping = true
         }
     }
     //    func drawHorizonLine(from startX:Double, to endX:Double, using color:UIColor)
@@ -34,17 +34,22 @@ class ViewController: UIViewController {
             display!.text = String(newValue)
         }
     }
+    
+    private var brain = CalculatorBrain()
+    
     @IBAction func performOperation(_ sender: UIButton) {
-        digitInMiddle = false
+        if userIsInTheMiddleOfTyping{
+            brain.setOperand(displayValue)
+            userIsInTheMiddleOfTyping = false
+        }
+        
         if let matheMaticalSymbol = sender.currentTitle{
-            switch matheMaticalSymbol {
-            case "π":
-                displayValue = Double.pi
-            case "√":
-                displayValue = sqrt(displayValue)
-            default:
-                break
-            }
+            brain.performOperation(matheMaticalSymbol)
+        }
+        if let result = brain.result {
+            
+            displayValue = result
+
         }
     }
 }
